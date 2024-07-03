@@ -1,50 +1,14 @@
 apiVersion: backstage.io/v1alpha1
-kind: Template
+kind: Component
 metadata:
-  name: jenkins-controller
-  description: |
-    Template for setting up a Jenkins controller in Kubernetes.
+  name: 'your-component'
+  description: 'a description'
+  annotations:
+    jenkins.io/github-folder: 'folder-name/project-name' # deprecated
+    jenkins.io/job-full-name: 'folder-name/project-name' # use this instead
+
 spec:
   type: service
-  owner: YourOrganization
-  parameters:
-    - name: jenkinsVersion
-      description: Version of Jenkins to install (e.g., "2.289.3").
-      type: string
-      default: "2.289.3"
-    - name: namespace
-      description: Kubernetes namespace where Jenkins will be deployed.
-      type: string
-      default: "jenkins"
-  steps:
-    - name: Clone Jenkins Git repository
-      description: Clone the Jenkins configuration repository.
-      command: git clone https://github.com/yourorg/jenkins-config.git
-
-    - name: Deploy Jenkins controller
-      description: Deploy Jenkins controller to Kubernetes.
-      command: kubectl apply -f jenkins-controller.yaml -n {{ parameters.namespace }}
-
-    - name: Install plugins
-      description: Install necessary Jenkins plugins.
-      command: |
-        kubectl exec -it jenkins-controller-pod -n {{ parameters.namespace }} -- \
-        install-plugins.sh plugin1 plugin2 plugin3
-
-    - name: Configure authentication
-      description: Configure authentication method for Jenkins.
-      command: |
-        kubectl exec -it jenkins-controller-pod -n {{ parameters.namespace }} -- \
-        configure-auth.sh
-
-    - name: Set up pipeline jobs
-      description: Set up initial pipeline jobs in Jenkins.
-      command: |
-        kubectl exec -it jenkins-controller-pod -n {{ parameters.namespace }} -- \
-        create-pipeline-jobs.sh
-
-  resources:
-    - type: repository
-      target: https://github.com/yourorg/jenkins-config
-      description: Jenkins configuration repository
+  lifecycle: experimental
+  owner: your-name
 
