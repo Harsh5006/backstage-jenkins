@@ -1,27 +1,13 @@
-name: Jenkins
-description: Integration with Jenkins CI/CD server
-maintainer: Your Name <your.email@example.com>
-tags:
-  - CI/CD
-  - Jenkins
-  - Automation
-  - DevOps
-repository: https://github.com/your-org/jenkins-integration
-documentation: https://docs.example.com/jenkins-integration-docs
-icon: https://example.com/icons/jenkins.png
-versions:
-  - version: 1.0.0
-    date: 2024-07-03
-    changelog: Initial release
-    kubeVersion: ">=1.19.0"
-    capabilities:
-      - type: application
-        description: Jenkins CI/CD server
-        url: https://jenkins.example.com
-        maturity: stable
-        maintenance: supported
-        provider: community
-        license: Apache License 2.0
-        tags:
-          - CI/CD
-          - Jenkins
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: jenkins-java-client-api
+  description: |
+    Repository for keeping jenkins-java-client-api
+  annotations:
+    github.com/project-slug: Tradeshift/jenkins-java-client-api    # GitHub project name
+
+spec:
+  type: other
+  owner: platform-ops
+  lifecycle: experimental
