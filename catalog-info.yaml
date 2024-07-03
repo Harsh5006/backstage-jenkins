@@ -1,23 +1,50 @@
 apiVersion: backstage.io/v1alpha1
-kind: Component
+kind: Template
 metadata:
-  name: backstage
+  name: jenkins-controller
   description: |
-    Backstage is an open-source developer portal that puts the developer experience first.
-  links:
-    - title: Website
-      url: http://backstage.io
-    - title: Documentation
-      url: https://backstage.io/docs
-    - title: Storybook
-      url: https://backstage.io/storybook
-    - title: Discord Chat
-      url: https://discord.com/invite/EBHEGzX
-  annotations:
-    github.com/project-slug: backstage/backstage
-    backstage.io/techdocs-ref: dir:.
-    lighthouse.com/website-url: https://backstage.io
+    Template for setting up a Jenkins controller in Kubernetes.
 spec:
-  type: library
-  owner: CNCF
-  lifecycle: experimental
+  type: service
+  owner: YourOrganization
+  parameters:
+    - name: jenkinsVersion
+      description: Version of Jenkins to install (e.g., "2.289.3").
+      type: string
+      default: "2.289.3"
+    - name: namespace
+      description: Kubernetes namespace where Jenkins will be deployed.
+      type: string
+      default: "jenkins"
+  steps:
+    - name: Clone Jenkins Git repository
+      description: Clone the Jenkins configuration repository.
+      command: git clone https://github.com/yourorg/jenkins-config.git
+
+    - name: Deploy Jenkins controller
+      description: Deploy Jenkins controller to Kubernetes.
+      command: kubectl apply -f jenkins-controller.yaml -n {{ parameters.namespace }}
+
+    - name: Install plugins
+      description: Install necessary Jenkins plugins.
+      command: |
+        kubectl exec -it jenkins-controller-pod -n {{ parameters.namespace }} -- \
+        install-plugins.sh plugin1 plugin2 plugin3
+
+    - name: Configure authentication
+      description: Configure authentication method for Jenkins.
+      command: |
+        kubectl exec -it jenkins-controller-pod -n {{ parameters.namespace }} -- \
+        configure-auth.sh
+
+    - name: Set up pipeline jobs
+      description: Set up initial pipeline jobs in Jenkins.
+      command: |
+        kubectl exec -it jenkins-controller-pod -n {{ parameters.namespace }} -- \
+        create-pipeline-jobs.sh
+
+  resources:
+    - type: repository
+      target: https://github.com/yourorg/jenkins-config
+      description: Jenkins configuration repository
+
