@@ -4,3 +4,7 @@ metadata:
   name: artist-lookup
   annotations:
     'jenkins.io/job-full-name': testfolder/testjob
+spec:
+  type: service
+  lifecycle: experimental
+  owner: your-name
