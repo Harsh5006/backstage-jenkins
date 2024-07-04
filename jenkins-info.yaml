@@ -1,10 +1,20 @@
+# apiVersion: backstage.io/v1alpha1
+# kind: Component
+# metadata:
+#   name: artist-lookup
+#   annotations:
+#     'jenkins.io/job-full-name': testfolder/testjob
+# spec:
+#   type: service
+#   lifecycle: experimental
+#   owner: your-name
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: artist-lookup
-  annotations:
-    'jenkins.io/job-full-name': testfolder/testjob
+  name: backstage-plugin-jenkins
+  title: '@backstage-community/plugin-jenkins'
+  description: A Backstage plugin that integrates towards Jenkins
 spec:
-  type: service
   lifecycle: experimental
-  owner: your-name
+  type: backstage-frontend-plugin
+  owner: maintainers
